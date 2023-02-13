@@ -1,8 +1,3 @@
----
-title: "Creating a Rest API Testing Framework"
-subtitle: "this is a sub"
----
-
 ****Step 1:** Create a gradle project**
 
 Follow the steps outlined in [Creating a Gradle Project With IntelliJ](https://jeremysteeves01.github.io/qa-test-automation/2023/01/26/creating-a-gradle-project-with-intellij.html)
