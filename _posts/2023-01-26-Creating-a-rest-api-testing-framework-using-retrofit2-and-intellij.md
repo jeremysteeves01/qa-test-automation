@@ -1,7 +1,7 @@
 ****Step 1:** Create a gradle project**
 
 Follow the steps outlined in [Creating a Gradle Project With IntelliJ](https://jeremysteeves01.github.io/qa-test-automation/2023/01/26/creating-a-gradle-project-with-intellij.html)
- 
+
 ****Step 2:** Start Adding Dependencies To Your Gradle Project**
 
 First things first, you’ll need to decide on a testing framework. By default IntelliJ provided you with the dependency for the JUnit testing framework in the build.gradle file. However, for this tutorial we are going to use TestNg instead.
@@ -18,13 +18,13 @@ Since this is a tutorial about how to use RetroFit2 libraries to help test Rest 
 
 <img width="601" alt="Screenshot 2023-01-26 at 9 36 46 AM" src="https://user-images.githubusercontent.com/76220477/214864623-5f35979a-808c-4556-a68b-617f2aab9bce.png">
 
-At this point we’ll stop adding dependencies, however we’ll be adding more later whenever we need them. 
+At this point we’ll stop adding dependencies, however we’ll be adding more later whenever we need them.
 
 ****Step 3:** Architecting The Project**
 
 Let’s start giving our project a little structure before we start adding any code.
 
-On the left side of the screen you’ll notice that IntelliJ created a project folder called src, which contains two sub-folders Main and Test. Inside both of them, there is a JAVA directory. 
+On the left side of the screen you’ll notice that IntelliJ created a project folder called src, which contains two sub-folders Main and Test. Inside both of them, there is a JAVA directory.
 
 <img width="193" alt="Screenshot 2023-01-26 at 9 41 43 AM" src="https://user-images.githubusercontent.com/76220477/214864989-7711b881-766c-4c73-a072-79fade7801a0.png">
 
@@ -35,7 +35,7 @@ Starting with the main>java directory, go ahead and add the following packages:
 ****Step 4:** Building the Client Layer**
 
 
-We still haven’t talked about what exactly we are testingl. We need some sort of Rest API to test, so we’ll use a free one available online at https://jsonplaceholder.typicode.com/ . 
+We still haven’t talked about what exactly we are testingl. We need some sort of Rest API to test, so we’ll use a free one available online at https://jsonplaceholder.typicode.com/ .
 
 On their website, under the “Resources” section, you can see that they outline the various resources that they support. For this tutorial we will focus on “users”.
 
@@ -67,9 +67,10 @@ Go back to the UserClient class and import the UserService interface into it:
 
 <img width="600" alt="Screenshot 2023-01-26 at 9 44 49 AM" src="https://user-images.githubusercontent.com/76220477/214866885-6d8f1f94-e32f-4e89-9563-64dd4aae2d0e.png">
 
-Inside the class constructor, we can start adding the code that will be responsible for building and sending the Rest request.
+Inside the class constructor, we can add the baseUrl. We will also create a private method called "setClient()", which will take in the baseUrl as a parameter and will be responsible for building and sending the Rest request..
 
-<img width="599" alt="Screenshot 2023-01-26 at 9 44 57 AM" src="https://user-images.githubusercontent.com/76220477/214866979-5781e178-3be2-4a96-b9e2-e8742400de6e.png">
+<img width="666" alt="Screenshot 2023-02-13 at 5 01 37 PM" src="https://user-images.githubusercontent.com/76220477/218584628-1c1d6f90-d74e-45b5-bde7-7ad689fba7b1.png">
+
 
 This time import the retrofit2 library:
 
@@ -83,7 +84,8 @@ Everything in our UserClient class should now compile:
 
 <img width="599" alt="Screenshot 2023-01-26 at 9 45 26 AM" src="https://user-images.githubusercontent.com/76220477/214867294-ae2811d3-80f4-4380-ab3e-e1b0577b1569.png">
 
-<img width="598" alt="Screenshot 2023-01-26 at 9 45 32 AM" src="https://user-images.githubusercontent.com/76220477/214867408-1e7c1cca-a90e-4676-b78c-7ac6b126a7c9.png">
+<img width="662" alt="Screenshot 2023-02-13 at 5 04 35 PM" src="https://user-images.githubusercontent.com/76220477/218585008-9e56b01d-ef76-4853-8f37-b088b64fe7ed.png">
+
 
 The only problem now is that our UserService class that we created earlier, is empty. So let’s go add some stuff to it.
 
@@ -95,13 +97,15 @@ You’ll need to import the following into the UserService class:
 
 Let’s say you wanted to send a request to get a list of all the users that exist in the system. To do that you will need to call the /Users endpoint. This is how you would do that using Retrofit2 libraries.
 
-<img width="600" alt="Screenshot 2023-01-26 at 9 46 08 AM" src="https://user-images.githubusercontent.com/76220477/214867617-3466ae32-d419-4ab3-b279-068e5bbc4b88.png">
+<img width="429" alt="Screenshot 2023-02-13 at 4 41 28 PM" src="https://user-images.githubusercontent.com/76220477/218580913-efbbe12a-251e-4f5e-a5ea-bdfefcc57a31.png">
 
-This line of code knows that we want to make a request to the system to retrieve a list of all the users in it. So it will make a ‘call’ to the server and the server will return a JSON response which will contain all the users. Retrofit2 will convert (deserialize) the JSON response into a list of type UserModel. 
+
+This line of code knows that we want to make a request to the system to retrieve a list of all the users in it. So it will make a ‘call’ to the server and the server will return a JSON response which will contain all the users. Retrofit2 will convert (deserialize) the JSON response into a list of type UserModel.
 
 We have not yet created a class called UserModel, which is why IntelliJ lights it up in red. We already know that the JSON payload for a single user looks like this:
 
 <img width="603" alt="Screenshot 2023-01-26 at 9 46 16 AM" src="https://user-images.githubusercontent.com/76220477/214867685-5fcbaf8f-3f33-4301-9cc3-e90059e32174.png">
+
 
 ****Step 6:** Building the Models**
 
@@ -140,6 +144,42 @@ GeoModel
 
 <img width="599" alt="Screenshot 2023-01-26 at 9 47 41 AM" src="https://user-images.githubusercontent.com/76220477/214868266-ae7b7ae6-8e84-497c-a65f-7a27d38ad3f0.png">
 
+
+**Step 7: Adding API Endpoints to the Service**
+
+Now that we have finished creating all the Models and importing lombok dependencies, it's a simple process to continue adding the rest of the CRUD endpoints to the service.
+
+<img width="821" alt="Screenshot 2023-02-13 at 4 40 04 PM" src="https://user-images.githubusercontent.com/76220477/218581618-8c3c6d87-1766-43d7-b3db-15eef829af94.png">
+
+
+**Step 8: Adding API calls to the client**
+
+Since we have loosely coupled the client and the service, any changes to the Endpoint should mostly be isolated to the service interface. Meanwhile, in the client we can make use of the magic of retrofit and communicate with our service to make the API calls.
+
+We will add a method for each call that we have defined in the service. Each of these methods will initialize the client by calling the "setClient()" method with the appropriate baseUrl.
+
+
+<img width="895" alt="Screenshot 2023-02-13 at 5 14 37 PM" src="https://user-images.githubusercontent.com/76220477/218586679-44326cbb-49c1-4d9f-a74d-bc22205e1064.png">
+
+
+**Step 9: Creating the test layer**
+
+Now that we’ve created the basic infrastructure needed to make Rest calls, let’s create our first test case using TestNg.
+
+Start by creating a new package called userTests in following location src > test > java
+
+Inside userTests, create a new class called BasicCrud.
+
+This class will serve as a place for us to test the GET, POST, PATCH, PUT and DELETE methods for the endpoints that we want to test. Each test case is essentially just a method in the class.
+
+<img width="372" alt="image" src="https://user-images.githubusercontent.com/76220477/218587618-5ddceccf-f2aa-4857-b604-32271f18a27b.png">
+
+The next thing to do is import the testNg annotations package and add the @Test annotation to the top of every method which you intend to be a test case.
+
+ <img width="213" alt="image" src="https://user-images.githubusercontent.com/76220477/218587723-6316db01-03ff-48e1-9eb0-091bbf0dbb1c.png">
+
+
+**Step 10: Writing the test cases**
 
 
 
