@@ -1,4 +1,4 @@
 ---
-Test Automation
+title: Welcome to my blog
 ---
 
